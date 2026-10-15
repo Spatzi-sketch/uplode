@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Nach dem Livegang auf Ihre echte Domain anpassen:
+Sitemap: https://www.hummelhof.at/sitemap.xml
