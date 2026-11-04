@@ -1,0 +1,18 @@
+# Systemdateien
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editoren
+.vscode/
+.idea/
+*.swp
+
+# Vercel
+.vercel
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
