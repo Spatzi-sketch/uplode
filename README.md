@@ -1,19 +1,80 @@
-# uplode
+# Hummelhof – Website
 
-Dieses Repository enthält zwei unabhängige Projekte:
+Statische Website für **Hummelhof – Gasthof & Landhotel** (Oberösterreich):
+Startseite, Speisekarte, Zimmer, Galerie, Kontakt sowie Impressum und
+Datenschutz. Kein Framework, kein Build-Schritt – reines HTML/CSS/JS und
+damit direkt auf Vercel deploybar.
 
-| Ordner / Datei | Inhalt |
+> **Shop:** Es gibt bewusst kein Shop-Menü und keine Shop-Seiten.
+
+---
+
+## Aufbau
+
+```
+./
+├─ index.html            Startseite (Hero, Über uns, Küche, Zimmer, Galerie, Stimmen, Anfahrt)
+├─ speisekarte.html      Speisekarte mit Kategorien und Preisen
+├─ zimmer.html           Zimmer „Stube“, „Lindenhof“, „Wiesenblick“, Preise, Inklusivleistungen
+├─ galerie.html          Bildergalerie mit Lightbox
+├─ kontakt.html          Kontaktdaten, Öffnungszeiten, Anfahrt, Anfrage-Formular
+├─ impressum.html        Impressum (Platzhalter – vor Livegang ersetzen)
+├─ datenschutz.html      Datenschutzerklärung (Platzhalter – vor Livegang prüfen)
+├─ vercel.json           Caching-Header, Security-Header, cleanUrls
+├─ robots.txt            Crawling-Freigaben (Domain anpassen)
+├─ sitemap.xml           Sitemap (Domain anpassen)
+└─ assets/
+   ├─ css/styles.css     Design-System (Farben, Typografie, Komponenten, Responsive)
+   ├─ js/main.js         Navigation, Scroll-Effekte, Lightbox, Öffnungszeiten, Formular
+   └─ img/               Bilder (KI-generiert) und Favicon
+```
+
+## Lokal ansehen
+
+Es genügt ein simpler Webserver im Projektordner:
+
+```bash
+python3 -m http.server 8000
+# danach http://localhost:8000 öffnen
+```
+
+Alternativ die `index.html` direkt im Browser öffnen – die Seite funktioniert
+auch als Datei, da alle Pfade relativ sind.
+
+## Auf Vercel deployen
+
+1. Repository in GitHub öffnen (dieser Ordner ist der Website-Stamm).
+2. In Vercel **Add New… → Project** wählen und das Repository importieren.
+3. **Framework Preset: Other**, **Build Command** leer lassen,
+   **Output Directory** leer lassen oder `.` eintragen.
+4. **Root Directory** auf das Repository-Hauptverzeichnis (`./`) setzen.
+   Falls zuvor `hummelhof-website` eingestellt war, diese Einstellung ändern.
+5. **Deploy** – fertig. Jeder weitere Push auf den Produktions-Branch löst
+   automatisch ein neues Deployment aus.
+
+## Vor dem Livegang anpassen
+
+| Was | Wo |
 | --- | --- |
-| [`hummelhof-website/`](hummelhof-website/README.md) | **Hummelhof – Gasthof & Landhotel**: statische Website (HTML/CSS/JS), bereit für Vercel. Enthält bewusst kein Shop-Menü. |
-| `game.zip` | Archiv mit dem Spiel „Velocity Crash / Game Obstacles and Rewards“ (Next.js) – nicht Teil der Website. |
+| Adresse, Telefon, E-Mail | `index.html`, `zimmer.html`, `kontakt.html`, `impressum.html`, `datenschutz.html` (Kopf- und Fußbereich) |
+| Preise der Speisen und Zimmer | `speisekarte.html`, `zimmer.html` |
+| Öffnungszeiten | Footer aller Seiten + Tabellen in `index.html` und `kontakt.html` |
+| Bilder | `assets/img/` – eigene Fotos ersetzen, Dateinamen beibehalten |
+| Domain | `robots.txt`, `sitemap.xml`, `<link rel="canonical">` in allen Seiten |
+| Firmendaten (UID, Firmenbuch, Gewerbe) | `impressum.html` |
+| Karteneinbindung | aktuell Link zu Google Maps; wer eine eingebettete Karte will, kann einen `<iframe>` in `kontakt.html` einsetzen (dann Datenschutzerklärung ergänzen) |
 
-## Deployment der Website auf Vercel
+## Technische Hinweise
 
-1. Vercel → **Add New… → Project** → dieses Repository importieren.
-2. **Framework Preset:** Other (kein Build nötig).
-3. **Root Directory:** `hummelhof-website`
-4. **Build Command / Output Directory:** leer lassen.
-5. **Deploy.**
-
-Details, Anpassungen und Checkliste vor dem Livegang:
-[`hummelhof-website/README.md`](hummelhof-website/README.md).
+- **Schriften:** Fraunces und Inter werden über Google Fonts geladen. Für
+  maximalen Datenschutz können die Schriftdateien heruntergeladen, unter
+  `assets/fonts/` abgelegt und im Stylesheet per `@font-face` eingebunden
+  werden.
+- **Bilder:** Alle Motive sind KI-generierte Platzhalter. Sie sind
+  lizenzfrei einsetzbar, zeigen aber nicht das echte Haus.
+- **Formular:** Da die Website statisch ist, öffnet der Absenden-Button das
+  E-Mail-Programm (`mailto:`). Wer ein echtes Server-Formular möchte, kann
+  z. B. Vercel Serverless Functions, Formspree oder ein anderes Formular-
+  Backend nachrüsten.
+- **Barrierefreiheit:** Skip-Link, Fokus-Stile, `aria`-Attribute, Alt-Texte
+  und `prefers-reduced-motion` sind berücksichtigt.
